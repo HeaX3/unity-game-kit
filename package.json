@@ -1,0 +1,26 @@
+{
+  "name": "com.heax3.unity-game-kit",
+  "version": "1.0.0",
+  "displayName": "Game Kit",
+  "description": "Standardized template to build games.",
+  "unity": "2022.3",
+  "unityRelease": "12f1",
+  "documentationUrl": "https://github.com/HeaX3/unity-game-kit",
+  "licensesUrl": "https://github.com/HeaX3/unity-game-kit",
+  "keywords": [],
+  "dependencies": {
+    "com.heax3.unity-essentials": "",
+    "com.heax3.data-store-unity": "",
+    "com.heax3.multiplayer-protocol-unity": "",
+    "com.heax3.rsg-promise-unity": "",
+    "com.heax3.object-pooling-unity": "",
+    "com.heax3.state-machines-unity": "",
+    "com.heax3.cameras-unity": "",
+    "com.unity.inputsystem": ""
+  },
+  "author": {
+    "name": "HeaX3",
+    "email": "heax@moonsama.com",
+    "url": "https://www.moonsama.com"
+  }
+}

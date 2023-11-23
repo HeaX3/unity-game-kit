@@ -1,0 +1,23 @@
+{
+    "name": "GameKit",
+    "rootNamespace": "GameKit",
+    "references": [
+        "Essentials",
+        "RSG.Promise",
+        "DataStore",
+        "MultiplayerProtocol",
+        "ObjectPooling",
+        "StateMachines",
+        "Cameras",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
