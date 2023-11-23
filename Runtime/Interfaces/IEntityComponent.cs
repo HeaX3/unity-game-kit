@@ -9,9 +9,9 @@ namespace GameKit
         void ApplyEntity(IEntity entity);
     }
 
-    public interface IEntityComponent<in T> where T : IEntity
+    public interface IEntityComponent<in T> : IEntityComponent where T : IEntity
     {
-        sealed void ApplyEntity(IEntity entity)
+        void IEntityComponent.ApplyEntity(IEntity entity)
         {
             if (entity == null)
             {
