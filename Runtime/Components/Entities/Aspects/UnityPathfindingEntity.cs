@@ -6,8 +6,9 @@ namespace GameKit.Entities
     [RequireComponent(typeof(NavMeshAgent))]
     public class UnityPathfindingEntity : MonoBehaviour, IPathfindingEntity
     {
-        [SerializeField] [HideInInspector] private NavMeshAgent agent;
+        [SerializeField] [HideInInspector] private NavMeshAgent _agent;
 
+        public NavMeshAgent agent => _agent;
         public Vector3[] path => agent.path?.corners;
         
         public float speed
@@ -46,7 +47,7 @@ namespace GameKit.Entities
 
         private void OnValidate()
         {
-            if (!agent || agent.gameObject != gameObject) agent = GetComponent<NavMeshAgent>();
+            if (!_agent || _agent.gameObject != gameObject) _agent = GetComponent<NavMeshAgent>();
         }
     }
 }
