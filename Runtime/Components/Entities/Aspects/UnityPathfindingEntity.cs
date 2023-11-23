@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace GameKit.Entities
@@ -29,6 +28,12 @@ namespace GameKit.Entities
         
         public bool SetDestination(Vector3 position)
         {
+            return agent.SetDestination(position);
+        }
+        
+        public bool SetDestination(Vector3 position, float speed)
+        {
+            this.speed = speed;
             return agent.SetDestination(position);
         }
 
