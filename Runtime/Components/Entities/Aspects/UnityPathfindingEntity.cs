@@ -9,12 +9,22 @@ namespace GameKit.Entities
     {
         [SerializeField] [HideInInspector] private NavMeshAgent agent;
 
-        [CanBeNull] public Vector3[] path => agent.path?.corners;
+        public Vector3[] path => agent.path?.corners;
         
         public float speed
         {
             get => agent.speed;
             set => agent.speed = value;
+        }
+
+        public void Initialize(EntityController controller)
+        {
+            
+        }
+
+        public void ApplyEntity(IEntity entity)
+        {
+            
         }
         
         public bool SetDestination(Vector3 position)

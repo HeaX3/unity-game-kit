@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameKit
 {
-    public interface IPathfindingEntity
+    public interface IPathfindingEntity : IEntityComponent
     {
         float speed { get; set; }
         [CanBeNull] Vector3[] path { get; }
