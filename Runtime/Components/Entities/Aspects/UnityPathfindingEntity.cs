@@ -8,9 +8,11 @@ namespace GameKit.Entities
     {
         [SerializeField] [HideInInspector] private NavMeshAgent _agent;
 
+        private new NavMeshPath _path = new();
+
         public NavMeshAgent agent => _agent;
         public Vector3[] path => agent.path?.corners;
-        
+
         public float speed
         {
             get => agent.speed;
@@ -21,23 +23,34 @@ namespace GameKit.Entities
 
         public void Initialize(EntityController controller)
         {
-            
         }
 
         public void ApplyEntity(IEntity entity)
         {
-            
         }
-        
+
         public bool SetDestination(Vector3 position)
         {
             return agent.SetDestination(position);
         }
-        
+
         public bool SetDestination(Vector3 position, float speed)
         {
             this.speed = speed;
             return agent.SetDestination(position);
+        }
+
+        public bool CalculatePath(Vector3 position, out Vector3[] path)
+        {
+            var result = agent.CalculatePath(position, _path);
+            if (!result)
+            {
+                path = null;
+                return false;
+            }
+
+            path = _path.corners;
+            return true;
         }
 
         public void Cancel()

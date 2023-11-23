@@ -10,6 +10,7 @@ namespace GameKit
         [CanBeNull] Vector3[] path { get; }
         bool SetDestination(Vector3 position);
         bool SetDestination(Vector3 position, float speed);
+        bool CalculatePath(Vector3 position, out Vector3[] path);
         void Cancel();
     }
 }
