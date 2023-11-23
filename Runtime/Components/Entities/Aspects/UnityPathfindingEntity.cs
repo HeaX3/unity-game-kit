@@ -16,6 +16,8 @@ namespace GameKit.Entities
             set => agent.speed = value;
         }
 
+        public bool moving => agent.hasPath;
+
         public void Initialize(EntityController controller)
         {
             

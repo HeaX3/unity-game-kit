@@ -5,6 +5,7 @@ namespace GameKit
 {
     public interface IPathfindingEntity : IEntityComponent
     {
+        bool moving { get; }
         float speed { get; set; }
         [CanBeNull] Vector3[] path { get; }
         bool SetDestination(Vector3 position);
