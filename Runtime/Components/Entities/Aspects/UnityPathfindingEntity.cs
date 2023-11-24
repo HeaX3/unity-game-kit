@@ -8,7 +8,7 @@ namespace GameKit.Entities
     {
         [SerializeField] [HideInInspector] private NavMeshAgent _agent;
 
-        private new NavMeshPath _path = new();
+        private NavMeshPath _path;
 
         public NavMeshAgent agent => _agent;
         public Vector3[] path => agent.path?.corners;
@@ -23,6 +23,7 @@ namespace GameKit.Entities
 
         public void Initialize(EntityController controller)
         {
+            
         }
 
         public void ApplyEntity(IEntity entity)
@@ -42,6 +43,7 @@ namespace GameKit.Entities
 
         public bool CalculatePath(Vector3 position, out Vector3[] path)
         {
+            _path ??= new NavMeshPath();
             var result = agent.CalculatePath(position, _path);
             if (!result)
             {
