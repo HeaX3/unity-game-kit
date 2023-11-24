@@ -12,8 +12,16 @@ namespace GameKit.Entities
         [SerializeField] [HideInInspector] private CharacterController _characterController;
 
         private float _yaw;
+        private Transform _transform;
 
-        private new Transform transform;
+        private new Transform transform
+        {
+            get
+            {
+                if (!_transform) _transform = base.transform;
+                return _transform;
+            }
+        }
         private Quaternion rotation;
         private Quaternion currentRotation;
 
@@ -27,11 +35,6 @@ namespace GameKit.Entities
                 _yaw = value;
                 rotation = Quaternion.Euler(0, value, 0);
             }
-        }
-
-        private void Awake()
-        {
-            transform = base.transform;
         }
 
         public void Initialize(EntityController controller)
