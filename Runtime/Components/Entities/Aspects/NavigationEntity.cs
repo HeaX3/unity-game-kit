@@ -22,10 +22,13 @@ namespace GameKit.Entities
                 return _transform;
             }
         }
+
         private Quaternion rotation;
         private Quaternion currentRotation;
 
         private CharacterController characterController => _characterController;
+
+        public bool controlYaw { get; set; } = true;
 
         public float yaw
         {
@@ -57,13 +60,13 @@ namespace GameKit.Entities
         {
             this.yaw = yaw;
             currentRotation = rotation;
-            transform.localRotation = currentRotation;
+            if (controlYaw) transform.localRotation = currentRotation;
         }
 
         private void LateUpdate()
         {
             currentRotation = Quaternion.RotateTowards(currentRotation, rotation, Time.deltaTime * 1080);
-            transform.localRotation = currentRotation;
+            if (controlYaw) transform.localRotation = currentRotation;
         }
 
         /// <summary>
