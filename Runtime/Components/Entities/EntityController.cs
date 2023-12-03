@@ -25,7 +25,7 @@ namespace GameKit.Entities
             }
         }
 
-        public string type { get; private set; }
+        public string type => entity?.type;
 
         private Transform meshTransform => _meshTransform;
 
