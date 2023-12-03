@@ -13,6 +13,7 @@ namespace GameKit.Entities
 
         private float _yaw;
         private Transform _transform;
+        private bool _gravityAppliedThisTick = false;
 
         private new Transform transform
         {
@@ -28,6 +29,7 @@ namespace GameKit.Entities
 
         private CharacterController characterController => _characterController;
 
+        public bool hasGravity { get; set; }
         public bool controlYaw { get; set; } = true;
 
         public float yaw
@@ -67,6 +69,11 @@ namespace GameKit.Entities
         {
             currentRotation = Quaternion.RotateTowards(currentRotation, rotation, Time.deltaTime * 1080);
             if (controlYaw) transform.localRotation = currentRotation;
+            if (!_gravityAppliedThisTick && hasGravity)
+            {
+                Move(new Vector3(0, -1, 0) * Time.deltaTime);
+                _gravityAppliedThisTick = false;
+            }
         }
 
         /// <summary>
@@ -87,8 +94,10 @@ namespace GameKit.Entities
         /// <param name="yaw">Yaw in degrees where 0 points north, 90 points east, 180 points south and 270 points west</param>
         public CollisionFlags Move(Vector3 motion, float yaw)
         {
+            if (hasGravity) motion.y -= 1;
             var flags = characterController.Move(motion);
             this.yaw = yaw;
+            _gravityAppliedThisTick = true;
             moved(transform.position, yaw);
             return flags;
         }
