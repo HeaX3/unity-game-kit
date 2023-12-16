@@ -17,7 +17,7 @@ namespace GameKit
         [NotNull]
         T GetData<T>() where T : IEntityData, new() => new();
 
-        public IEnumerable<T> GetAllData<T>() where T : IEntityData, new();
+        public IEnumerable<T> GetAllData<T>() where T : IEntityData;
 
         public IEnumerable<IEntityData> GetAllData();
     }

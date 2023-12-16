@@ -16,7 +16,7 @@ namespace GameKit
             return _dataObjects.OfType<T>().DefaultIfEmpty(CreateMetadata<T>()).First();
         }
 
-        public IEnumerable<T> GetAllData<T>() where T : IEntityData, new() => _dataObjects.OfType<T>();
+        public IEnumerable<T> GetAllData<T>() where T : IEntityData => _dataObjects.OfType<T>();
         
         public IEnumerable<IEntityData> GetAllData() => _dataObjects;
 
