@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GameKit
 {
-    public interface IEntityJsonData
+    public interface IEntityJsonData : IEntityData
     {
         string sectionId { get; }
 
