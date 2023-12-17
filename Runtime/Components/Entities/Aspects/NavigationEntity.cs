@@ -14,6 +14,7 @@ namespace GameKit.Entities
         private float _yaw;
         private Transform _transform;
         private bool _gravityAppliedThisTick = false;
+        private bool _velocityUpdatedThisTick = false;
 
         private new Transform transform
         {
@@ -24,10 +25,14 @@ namespace GameKit.Entities
             }
         }
 
+        private Vector3 previousPosition;
+        private Vector3 currentVelocity;
         private Quaternion rotation;
         private Quaternion currentRotation;
 
         private CharacterController characterController => _characterController;
+
+        public Vector3 velocity => _velocityUpdatedThisTick ? currentVelocity : UpdateVelocity();
 
         public bool hasGravity { get; set; }
         public bool controlYaw { get; set; } = true;
@@ -40,6 +45,12 @@ namespace GameKit.Entities
                 _yaw = value;
                 rotation = Quaternion.Euler(0, value, 0);
             }
+        }
+
+        private void OnEnable()
+        {
+            previousPosition = transform.position;
+            _velocityUpdatedThisTick = false;
         }
 
         public void Initialize(EntityController controller)
@@ -74,6 +85,10 @@ namespace GameKit.Entities
                 Move(new Vector3(0, -1, 0) * Time.deltaTime);
                 _gravityAppliedThisTick = false;
             }
+
+            if (!_velocityUpdatedThisTick) UpdateVelocity();
+            previousPosition = transform.position;
+            _velocityUpdatedThisTick = false;
         }
 
         /// <summary>
@@ -98,6 +113,7 @@ namespace GameKit.Entities
             var flags = characterController.Move(motion);
             this.yaw = yaw;
             _gravityAppliedThisTick = true;
+            UpdateVelocity();
             moved(transform.position, yaw);
             return flags;
         }
@@ -122,7 +138,15 @@ namespace GameKit.Entities
         {
             if (!characterController.SimpleMove(speed)) return;
             this.yaw = yaw;
+            UpdateVelocity();
             moved(transform.position, yaw);
+        }
+
+        private Vector3 UpdateVelocity()
+        {
+            currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
+            _velocityUpdatedThisTick = true;
+            return currentVelocity;
         }
 
         private void OnValidate()
