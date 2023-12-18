@@ -63,10 +63,9 @@ namespace GameKit.Entities
 
         public void SetPositionWithoutNotify(Vector3 position)
         {
-            characterController.enabled = false;
+            previousPosition = transform.position;
             transform.position = position;
-            // ReSharper disable once Unity.InefficientPropertyAccess
-            characterController.enabled = true;
+            UpdateVelocity();
         }
 
         public void SetYawWithoutNotify(float yaw)
@@ -87,8 +86,12 @@ namespace GameKit.Entities
             }
 
             if (!_velocityUpdatedThisTick) UpdateVelocity();
-            previousPosition = transform.position;
+        }
+
+        private void OnPostRender()
+        {
             _velocityUpdatedThisTick = false;
+            previousPosition = transform.position;
         }
 
         /// <summary>
