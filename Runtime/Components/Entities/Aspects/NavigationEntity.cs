@@ -11,6 +11,7 @@ namespace GameKit.Entities
         public event MoveEvent moved = delegate { };
 
         [SerializeField] [HideInInspector] private CharacterController _characterController;
+        [SerializeField] private bool _debug;
 
         private Transform _transform;
         private bool _movementAppliedThisTick;
@@ -155,6 +156,7 @@ namespace GameKit.Entities
             var position = transform.position;
             currentVelocity = (position - previousPosition) / Time.deltaTime;
             previousPosition = position;
+            if (_debug) Debug.Log(name + " velocity: " + currentVelocity);
         }
 
         private void OnValidate()
