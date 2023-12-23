@@ -80,10 +80,11 @@ namespace GameKit.Entities
             if (controlYaw || controlRotation) transform.localRotation = currentRotation;
             if (!_movementAppliedThisTick)
             {
-                _movementAppliedThisTick = true;
                 if (hasGravity) Move(new Vector3(0, -1, 0) * Time.deltaTime);
                 else UpdateVelocity();
             }
+
+            _movementAppliedThisTick = false;
         }
 
         /// <summary>
@@ -144,6 +145,7 @@ namespace GameKit.Entities
             if (!characterController.SimpleMove(speed)) return;
             yaw = rotation.eulerAngles.y;
             this.rotation = rotation;
+            _movementAppliedThisTick = true;
             UpdateVelocity();
             moved(transform.position, rotation);
         }
