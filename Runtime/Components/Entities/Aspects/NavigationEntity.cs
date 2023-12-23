@@ -13,8 +13,7 @@ namespace GameKit.Entities
         [SerializeField] [HideInInspector] private CharacterController _characterController;
 
         private Transform _transform;
-        private bool _gravityAppliedThisTick = false;
-        private bool _velocityUpdatedThisTick = false;
+        private bool _gravityAppliedThisTick;
 
         private new Transform transform
         {
@@ -32,7 +31,7 @@ namespace GameKit.Entities
 
         private CharacterController characterController => _characterController;
 
-        public Vector3 velocity => _velocityUpdatedThisTick ? currentVelocity : UpdateVelocity();
+        public Vector3 velocity => currentVelocity;
 
         public bool hasGravity { get; set; }
         public bool controlYaw { get; set; } = true;
@@ -43,8 +42,6 @@ namespace GameKit.Entities
         private void OnEnable()
         {
             previousPosition = transform.position;
-            _velocityUpdatedThisTick = false;
-            StartCoroutine(LastUpdate());
         }
 
         public void Initialize(EntityController controller)
@@ -85,18 +82,6 @@ namespace GameKit.Entities
             {
                 Move(new Vector3(0, -1, 0) * Time.deltaTime);
                 _gravityAppliedThisTick = false;
-            }
-
-            if (!_velocityUpdatedThisTick) UpdateVelocity();
-        }
-
-        private IEnumerator LastUpdate()
-        {
-            while (this)
-            {
-                yield return new WaitForEndOfFrame();
-                _velocityUpdatedThisTick = false;
-                previousPosition = transform.position;
             }
         }
 
@@ -162,11 +147,11 @@ namespace GameKit.Entities
             moved(transform.position, rotation);
         }
 
-        private Vector3 UpdateVelocity()
+        public void UpdateVelocity()
         {
-            currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
-            _velocityUpdatedThisTick = true;
-            return currentVelocity;
+            var position = transform.position;
+            currentVelocity = (position - previousPosition) / Time.deltaTime;
+            previousPosition = position;
         }
 
         private void OnValidate()
