@@ -147,7 +147,7 @@ namespace GameKit.Entities
             moved(transform.position, rotation);
         }
 
-        public void UpdateVelocity()
+        private void UpdateVelocity()
         {
             var position = transform.position;
             currentVelocity = (position - previousPosition) / Time.deltaTime;
