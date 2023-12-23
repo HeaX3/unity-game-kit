@@ -57,6 +57,7 @@ namespace GameKit.Entities
         {
             previousPosition = transform.position;
             transform.position = position;
+            _movementAppliedThisTick = true;
             UpdateVelocity();
         }
 
