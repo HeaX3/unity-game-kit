@@ -13,7 +13,7 @@ namespace GameKit.Entities
         [SerializeField] [HideInInspector] private CharacterController _characterController;
 
         private Transform _transform;
-        private bool _gravityAppliedThisTick;
+        private bool _movementAppliedThisTick;
 
         private new Transform transform
         {
@@ -78,10 +78,11 @@ namespace GameKit.Entities
         {
             currentRotation = Quaternion.RotateTowards(currentRotation, rotation, Time.deltaTime * 1080);
             if (controlYaw || controlRotation) transform.localRotation = currentRotation;
-            if (!_gravityAppliedThisTick && hasGravity)
+            if (!_movementAppliedThisTick)
             {
-                Move(new Vector3(0, -1, 0) * Time.deltaTime);
-                _gravityAppliedThisTick = false;
+                _movementAppliedThisTick = true;
+                if (hasGravity) Move(new Vector3(0, -1, 0) * Time.deltaTime);
+                else UpdateVelocity();
             }
         }
 
@@ -110,7 +111,7 @@ namespace GameKit.Entities
             var flags = characterController.Move(motion);
             yaw = rotation.eulerAngles.y;
             this.rotation = rotation;
-            _gravityAppliedThisTick = true;
+            _movementAppliedThisTick = true;
             UpdateVelocity();
             moved(transform.position, rotation);
             return flags;
