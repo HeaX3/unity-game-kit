@@ -19,11 +19,11 @@ namespace GameKit.Entities
             set => agent.speed = value;
         }
 
-        public bool moving => agent.hasPath;
+        public bool moving => agent.hasPath && agent.velocity.sqrMagnitude < 0.001f &&
+                              agent.remainingDistance <= agent.stoppingDistance;
 
         public void Initialize(EntityController controller)
         {
-            
         }
 
         public void ApplyEntity(IEntity entity)
