@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace GameKit.Entities
 {
@@ -43,6 +44,7 @@ namespace GameKit.Entities
         {
             previousPosition = transform.position;
             _velocityUpdatedThisTick = false;
+            StartCoroutine(LastUpdate());
         }
 
         public void Initialize(EntityController controller)
@@ -88,10 +90,14 @@ namespace GameKit.Entities
             if (!_velocityUpdatedThisTick) UpdateVelocity();
         }
 
-        private void OnPostRender()
+        private IEnumerator LastUpdate()
         {
-            _velocityUpdatedThisTick = false;
-            previousPosition = transform.position;
+            while (this)
+            {
+                yield return new WaitForEndOfFrame();
+                _velocityUpdatedThisTick = false;
+                previousPosition = transform.position;
+            }
         }
 
         /// <summary>
