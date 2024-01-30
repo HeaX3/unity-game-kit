@@ -26,8 +26,18 @@ namespace GameKit.Entities
         {
         }
 
+        private void OnEnable()
+        {
+            Teleport(transform.position);
+        }
+
         public void ApplyEntity(IEntity entity)
         {
+        }
+
+        public bool Teleport(Vector3 position)
+        {
+            return agent.Warp(position);
         }
 
         public bool SetDestination(Vector3 position)
