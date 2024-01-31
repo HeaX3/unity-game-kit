@@ -32,6 +32,11 @@ namespace GameKit.Entities
         private CharacterController characterController => _characterController;
 
         public Vector3 velocity => currentVelocity;
+        
+        /// <summary>
+        /// Turn speed in full rotations per second
+        /// </summary>
+        public float TurnSpeed { get; set; } = 3;
 
         public bool hasGravity { get; set; }
         public bool controlYaw { get; set; } = true;
@@ -64,20 +69,27 @@ namespace GameKit.Entities
         {
             this.yaw = yaw;
             rotation = Quaternion.Euler(0, yaw, 0);
-            currentRotation = rotation;
-            if (!smooth && controlYaw) transform.localRotation = currentRotation;
+            if (!smooth)
+            {
+                currentRotation = rotation;
+                if (controlYaw) transform.localRotation = currentRotation;
+            }
         }
 
         public void SetRotationWithoutNotify(Quaternion rotation, bool smooth = false)
         {
             yaw = rotation.eulerAngles.y;
-            currentRotation = rotation;
-            if (!smooth && controlRotation) transform.localRotation = currentRotation;
+            this.rotation = rotation;
+            if (!smooth)
+            {
+                currentRotation = rotation;
+                if (controlRotation) transform.localRotation = currentRotation;
+            }
         }
 
         private void LateUpdate()
         {
-            currentRotation = Quaternion.RotateTowards(currentRotation, rotation, Time.deltaTime * 1080);
+            currentRotation = Quaternion.RotateTowards(currentRotation, rotation, Time.deltaTime * 360 * TurnSpeed);
             if (controlYaw || controlRotation) transform.localRotation = currentRotation;
             if (!_movementAppliedThisTick)
             {
