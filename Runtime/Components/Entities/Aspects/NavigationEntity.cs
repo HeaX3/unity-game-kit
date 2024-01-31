@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameKit.Entities
 {
@@ -61,19 +60,19 @@ namespace GameKit.Entities
             UpdateVelocity();
         }
 
-        public void SetYawWithoutNotify(float yaw)
+        public void SetYawWithoutNotify(float yaw, bool smooth = false)
         {
             this.yaw = yaw;
             rotation = Quaternion.Euler(0, yaw, 0);
             currentRotation = rotation;
-            if (controlYaw) transform.localRotation = currentRotation;
+            if (!smooth && controlYaw) transform.localRotation = currentRotation;
         }
 
-        public void SetRotationWithoutNotify(Quaternion rotation)
+        public void SetRotationWithoutNotify(Quaternion rotation, bool smooth = false)
         {
             yaw = rotation.eulerAngles.y;
             currentRotation = rotation;
-            if (controlRotation) transform.localRotation = currentRotation;
+            if (!smooth && controlRotation) transform.localRotation = currentRotation;
         }
 
         private void LateUpdate()
